@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import classes from './BurgerIngredient.css';
 
 // User curly braces beacause jsx is going to be written
+// Changed this component from a function to a class to 
+// enable the use of proptype checking
 class BurgerIngredient extends Component {
 	render () {
 		let ingredient = null;
