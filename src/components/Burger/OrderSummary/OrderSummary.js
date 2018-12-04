@@ -3,6 +3,8 @@ import React from 'react';
 // Wrapping element not needed so use Auxilliary
 import Aux from '../../../hoc/Aux';
 
+import Button from '../../UI/Button/Button';
+
 const orderSummary = (props) => {
 	// Add logic before the return satement
 	const ingredientSummary = Object.keys(props.ingredients).map(
@@ -26,6 +28,8 @@ const orderSummary = (props) => {
 				{ingredientSummary}
 			</ul>
 			<p>Continue Checkout?</p>
+			<Button type='Danger' clicked={props.cancel} >CANCEL</Button>
+			<Button type='Success' clicked={props.continue} >CONTINUE</Button>
 		</Aux>
 	);
 };
