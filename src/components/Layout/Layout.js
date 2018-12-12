@@ -5,10 +5,12 @@ import Aux from '../../hoc/Aux';
 
 import classes from './Layout.css';
 
+import Toolbar from '../Navigation/Toolbar/Toolbar';
+
 // Single root element achieve with hoc Aux
 const layout = (props) => (
 	<Aux>
-		<div>Toolbar, SideDrawer, Backdrop</div>
+		<Toolbar />
 		<main className={classes.Content}>
 			{props.children}
 		</main>
