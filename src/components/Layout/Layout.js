@@ -1,5 +1,5 @@
 //
-import React from 'react';
+import React, {Component} from 'react';
 
 import Aux from '../../hoc/Aux';
 
@@ -10,14 +10,28 @@ import Toolbar from '../Navigation/Toolbar/Toolbar';
 import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 
 // Single root element achieve with hoc Aux
-const layout = (props) => (
-	<Aux>
-		<Toolbar />
-		<SideDrawer />
-		<main className={classes.Content}>
-			{props.children}
-		</main>
-	</Aux>
-);
+class Layout extends Component {
+	state = {
+		showSide: true
+	}
 
-export default layout;
+	sideClose = () => {
+		this.setState({showSide: false});
+	}
+
+	render () {
+		return (
+			<Aux>
+				<Toolbar />
+				<SideDrawer 
+				open={this.state.showSide} 
+				closed={this.sideClose}/>
+				<main className={classes.Content}>
+					{this.props.children}
+				</main>
+			</Aux>
+		)
+	}
+}
+
+export default Layout;
