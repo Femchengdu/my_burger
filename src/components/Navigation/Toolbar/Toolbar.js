@@ -6,10 +6,12 @@ import Logo from '../../Logo/Logo';
 
 import NavItems from '../NavItems/NavItems';
 
+import ToggleSide from '../SideDrawer/ToggleSide/ToggleSide';
+
 
 const toolbar = (props) => (
 	<header className={classes.Toolbar} >
-		<div>Menu</div>
+		<ToggleSide clicked={props.toggleClick}/>
 		<Logo />
 		<nav className={classes.DesktopOnly} >
 			<NavItems />
