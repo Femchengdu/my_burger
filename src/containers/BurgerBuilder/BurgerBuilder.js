@@ -11,6 +11,8 @@ import Modal from '../../components/UI/Modal/Modal';
 
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
+import axios from '../../axios_orders';
+
 // Global constants in all caps.
 const INGREDIENT_PRICE = {
 	salad: 0.5,
@@ -97,7 +99,27 @@ class BurgerBuilder extends Component {
 	}
 
 	continuePurchase = () => {
-		alert('You have sold!');
+		//alert('You have sold!');
+		const order = {
+			ingredients: this.state.ingredients,
+			//Calculate the total price on the server to ensure that the 
+			// user is not manipulating the price from the browser.
+			price: this.state.totalPrice,
+			customer: {
+				name: 'Fan Miao',
+				address: {
+					street: '123 Fan Yang Lu',
+					zip: '555555',
+					country: 'China'
+				},
+				email: 'inbox@yahoo.com'
+			},
+			deliveryMethod: 'fast'
+		}
+
+		axios.post('/orders.json', order)
+			.then(response => console.log(response))
+			.catch(error => console.log(error));
 	}
 
 	render () {
