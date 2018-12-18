@@ -15,6 +15,8 @@ import axios from '../../axios_orders';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
 
+import globalErrors from '../../hoc/globalErrors/globalErrors';
+
 // Global constants in all caps.
 const INGREDIENT_PRICE = {
 	salad: 0.5,
@@ -166,4 +168,4 @@ class BurgerBuilder extends Component {
 	}
 }
 
-export default BurgerBuilder;
+export default globalErrors(BurgerBuilder, axios);
