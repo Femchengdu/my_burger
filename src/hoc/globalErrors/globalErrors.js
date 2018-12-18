@@ -10,13 +10,18 @@ const globalErrors = (WrappedComponent, axios) => {
 			error: null
 		}
 		componentWillMount () {
-			axios.interceptors.request.use(request => {
+			this.request_intercept = axios.interceptors.request.use(request => {
 				this.setState({error: null});
 				return request;
 			});
-			axios.interceptors.response.use(response => response, error => {
+			this.response_intercept = axios.interceptors.response.use(response => response, error => {
 				this.setState({error: error});
 			});
+		}
+
+		componentWillUnmount () {
+			axios.interceptors.request.eject(this.request_intercept);
+			axios.interceptors.response.eject(this.response_intercept);
 		}
 
 		errorDismis = () => {
