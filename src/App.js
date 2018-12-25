@@ -9,6 +9,8 @@ import Checkout from './containers/Checkout/Checkout';
 
 import {Route} from 'react-router-dom';
 
+import PrevOrders from './containers/PrevOrders/PrevOrders';
+
 class App extends Component {
 	/*
 		Because the (path prop ) '/' is treated as a prefix path/route,
@@ -22,6 +24,7 @@ class App extends Component {
         <Layout>
         	<Route path='/' exact component={BurgerBuilder} />
         	<Route path='/checkout' component={Checkout} />
+          <Route path='/prev-orders' component={PrevOrders} />
 	        {/*
 				<BurgerBuilder />
         		<Checkout />
