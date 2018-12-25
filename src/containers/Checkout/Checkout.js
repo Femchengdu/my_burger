@@ -1,15 +1,21 @@
+//......
 import React, {Component} from 'react';
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 
 class Checkout extends Component {
 	state = {
-		ingredients: {
-			salad: 1,
-			meat: 1,
-			cheese: 1,
-			bacon: 1
+		ingredients: {}
+	}
+
+	componentDidMount () {
+		const urlQuery = new URLSearchParams(this.props.location.search);
+		const ingredients = {};
+		for (let ingredient of urlQuery.entries()) {
+			ingredients[ingredient[0]] = +ingredient[1];
 		}
+		this.setState({ingredients: ingredients});
+		//console.log('componentDidMount:', this.state.ingredients);
 	}
 
 	checkoutContinue = () => {
@@ -24,10 +30,7 @@ class Checkout extends Component {
 		then return JSX
 	*/
 
-	// Testing the componenet did mount
-	// componentDidMount () {
-	// 	console.log(this.props);
-	// }
+	
 	render () {
 		return (
 			<div>
