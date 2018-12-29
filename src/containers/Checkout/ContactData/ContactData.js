@@ -1,4 +1,4 @@
-//......
+//.......
 import React, {Component} from 'react';
 
 import Button from '../../../components/UI/Button/Button';
@@ -89,6 +89,21 @@ class ContacData extends Component {
 			});
 	}
 
+
+	changedInput = (event, inptuId) => {
+		//console.log(event.target.value);
+		const updateOrder = {
+			...this.state.orderForm
+		};
+		// To colone deeply for the nested values
+		const updateOrderElement = {
+			...updateOrder[inptuId]
+		};
+		updateOrderElement.value = event.target.value;
+		updateOrder[inptuId] = updateOrderElement;
+		this.setState({orderForm: updateOrder}); 
+	}
+
 	render () {
 		const formElements = [];
 		for (let element in this.state.orderForm) {
@@ -106,7 +121,7 @@ class ContacData extends Component {
 						key={element.id}
 						elementType={element.config.elementType}
 						elementConfig={element.config.elementConfig}
-						value={element.config.value}/>
+						value={element.config.value} changed={(event) => this.changedInput(event, element.id)}/>
 				))}
 		
 				<Button type='Success' clicked={this.orderMethod}>ORDER</Button>
