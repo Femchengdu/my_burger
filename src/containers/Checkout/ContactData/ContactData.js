@@ -1,4 +1,4 @@
-//........
+//.........
 import React, {Component} from 'react';
 
 import Button from '../../../components/UI/Button/Button';
@@ -21,7 +21,11 @@ class ContacData extends Component {
 					type: 'text',
 					placeholder: 'Your Name'
 				},
-				value: ''
+				value: '',
+				validation: {
+					required: true
+				},
+				valid: false
 			},
 			street: {
 				elementType: 'input',
@@ -29,7 +33,11 @@ class ContacData extends Component {
 					type: 'text',
 					placeholder: 'Street'
 				},
-				value: ''
+				value: '',
+				validation: {
+					required: true
+				},
+				valid: false
 			},
 			zip: {
 				elementType: 'input',
@@ -37,7 +45,11 @@ class ContacData extends Component {
 					type: 'text',
 					placeholder: 'Zip Code'
 				},
-				value: ''
+				value: '',
+				validation: {
+					required: true
+				},
+				valid: false
 			},
 			country:{
 				elementType: 'input',
@@ -45,7 +57,11 @@ class ContacData extends Component {
 					type: 'text',
 					placeholder: 'Your Country'
 				},
-				value: ''
+				value: '',
+				validation: {
+					required: true
+				},
+				valid: false
 			},
 			email: {
 				elementType: 'input',
@@ -53,7 +69,11 @@ class ContacData extends Component {
 					type: 'email',
 					placeholder: 'Your Email'
 				},
-				value: ''
+				value: '',
+				validation: {
+					required: true
+				},
+				valid: false
 			},
 			deliveryMethod: {
 				elementType: 'select',
@@ -94,9 +114,15 @@ class ContacData extends Component {
 			});
 	}
 
+	validationCheck(value, rules) {
+		let isValid = false;
+		if (rules.required) {
+			isValid = value.trim() !== '';
+		};
+		return isValid;
+	}
 
 	changedInput = (event, inptuId) => {
-		//console.log(event.target.value);
 		const updateOrder = {
 			...this.state.orderForm
 		};
@@ -105,7 +131,9 @@ class ContacData extends Component {
 			...updateOrder[inptuId]
 		};
 		updateOrderElement.value = event.target.value;
+		updateOrderElement.valid = this.validationCheck(updateOrderElement.value, updateOrderElement.validation);
 		updateOrder[inptuId] = updateOrderElement;
+		console.log(updateOrderElement.valid);
 		this.setState({orderForm: updateOrder}); 
 	}
 
