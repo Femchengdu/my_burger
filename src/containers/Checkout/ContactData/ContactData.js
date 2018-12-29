@@ -1,4 +1,4 @@
-//.......
+//........
 import React, {Component} from 'react';
 
 import Button from '../../../components/UI/Button/Button';
@@ -73,10 +73,15 @@ class ContacData extends Component {
 	orderMethod = (event) => {
 		event.preventDefault();
 		this.setState({loading: true});
-		console.log(typeof this.props.price);
+		//console.log(typeof this.props.price);
+		const formData = {};
+		for (let orderId in this.state.orderForm) {
+			formData[orderId] = this.state.orderForm[orderId].value
+		}
 		const order = {
 			ingredients: this.props.ingredients,
 			price: this.props.price.toFixed(2),
+			orderDetails: formData
 		}
 
 		axios.post('/orders.json', order)
@@ -115,7 +120,7 @@ class ContacData extends Component {
 		}
 
 		let form = (
-			<form>
+			<form onSubmit={this.orderMethod}>
 				{formElements.map(element => (
 					<Input 
 						key={element.id}
@@ -124,7 +129,7 @@ class ContacData extends Component {
 						value={element.config.value} changed={(event) => this.changedInput(event, element.id)}/>
 				))}
 		
-				<Button type='Success' clicked={this.orderMethod}>ORDER</Button>
+				<Button type='Success'>ORDER</Button>
 			</form>
 		);
 
