@@ -93,9 +93,11 @@ class ContacData extends Component {
 				value: '',
 				validation: {
 					required: false
-				}
+				},
+				valid: true
 			}
 		},
+		isFormValid: false,
 		loading: false
 	}
 
@@ -153,8 +155,11 @@ class ContacData extends Component {
 		updateOrderElement.valid = this.validationCheck(updateOrderElement.value, updateOrderElement.validation);
 		updateOrderElement.touched = true;
 		updateOrder[inptuId] = updateOrderElement;
-		//console.log(updateOrderElement.valid);
-		this.setState({orderForm: updateOrder}); 
+		let isFormValid = true;
+		for (let inptuId in updateOrder) {
+			isFormValid = updateOrder[inptuId].valid && isFormValid;
+		}
+		this.setState({orderForm: updateOrder, isFormValid: isFormValid}); 
 	}
 
 	render () {
@@ -181,7 +186,7 @@ class ContacData extends Component {
 						changed={(event) => this.changedInput(event, element.id)}/>
 				))}
 		
-				<Button type='Success'>ORDER</Button>
+				<Button type='Success' disabled={!this.state.isFormValid}>ORDER</Button>
 			</form>
 		);
 
