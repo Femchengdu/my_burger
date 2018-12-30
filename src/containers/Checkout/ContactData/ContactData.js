@@ -1,4 +1,4 @@
-//.............
+//...............
 import React, {Component} from 'react';
 
 import Button from '../../../components/UI/Button/Button';
@@ -25,7 +25,8 @@ class ContacData extends Component {
 				validation: {
 					required: true
 				},
-				valid: false
+				valid: false,
+				touched: false
 			},
 			street: {
 				elementType: 'input',
@@ -37,7 +38,8 @@ class ContacData extends Component {
 				validation: {
 					required: true
 				},
-				valid: false
+				valid: false,
+				touched: false
 			},
 			zip: {
 				elementType: 'input',
@@ -51,7 +53,8 @@ class ContacData extends Component {
 					minLength: 5,
 					maxLength: 6
 				},
-				valid: false
+				valid: false,
+				touched: false
 			},
 			country:{
 				elementType: 'input',
@@ -63,7 +66,8 @@ class ContacData extends Component {
 				validation: {
 					required: true
 				},
-				valid: false
+				valid: false,
+				touched: false
 			},
 			email: {
 				elementType: 'input',
@@ -75,7 +79,8 @@ class ContacData extends Component {
 				validation: {
 					required: true
 				},
-				valid: false
+				valid: false,
+				touched: false
 			},
 			deliveryMethod: {
 				elementType: 'select',
@@ -85,7 +90,10 @@ class ContacData extends Component {
 						{value: 'normal', displayValue: 'Normal'}
 					]
 				},
-				value: ''
+				value: '',
+				validation: {
+					required: false
+				}
 			}
 		},
 		loading: false
@@ -143,8 +151,9 @@ class ContacData extends Component {
 		};
 		updateOrderElement.value = event.target.value;
 		updateOrderElement.valid = this.validationCheck(updateOrderElement.value, updateOrderElement.validation);
+		updateOrderElement.touched = true;
 		updateOrder[inptuId] = updateOrderElement;
-		console.log(updateOrderElement.valid);
+		//console.log(updateOrderElement.valid);
 		this.setState({orderForm: updateOrder}); 
 	}
 
@@ -165,7 +174,11 @@ class ContacData extends Component {
 						key={element.id}
 						elementType={element.config.elementType}
 						elementConfig={element.config.elementConfig}
-						value={element.config.value} changed={(event) => this.changedInput(event, element.id)}/>
+						value={element.config.value}
+						invalid={!element.config.valid}
+						shouldValidate={element.config.validation.required}
+						touched={element.config.touched} 
+						changed={(event) => this.changedInput(event, element.id)}/>
 				))}
 		
 				<Button type='Success'>ORDER</Button>
