@@ -1,4 +1,4 @@
-//.........
+//.............
 import React, {Component} from 'react';
 
 import Button from '../../../components/UI/Button/Button';
@@ -47,7 +47,9 @@ class ContacData extends Component {
 				},
 				value: '',
 				validation: {
-					required: true
+					required: true,
+					minLength: 5,
+					maxLength: 6
 				},
 				valid: false
 			},
@@ -115,10 +117,19 @@ class ContacData extends Component {
 	}
 
 	validationCheck(value, rules) {
-		let isValid = false;
+		let isValid = true;
 		if (rules.required) {
-			isValid = value.trim() !== '';
-		};
+			isValid = value.trim() !== '' && isValid
+		}
+
+		if (rules.minLength) {
+			isValid = value.length >= rules.minLength && isValid
+		}
+
+		if (rules.maxLength) {
+			isValid = value.length <= rules.maxLength && isValid
+		}
+		
 		return isValid;
 	}
 
