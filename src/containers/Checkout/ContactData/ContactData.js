@@ -1,4 +1,4 @@
-//...............
+//................
 import React, {Component} from 'react';
 
 import Button from '../../../components/UI/Button/Button';
@@ -90,7 +90,7 @@ class ContacData extends Component {
 						{value: 'normal', displayValue: 'Normal'}
 					]
 				},
-				value: '',
+				value: 'fastest',
 				validation: {
 					required: false
 				},
