@@ -17,6 +17,10 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 import globalErrors from '../../hoc/globalErrors/globalErrors';
 
+import {connect} from 'react-redux';
+
+import * as actionTypes from '../../reducer_store/actions';
+
 // Global constants in all caps.
 const INGREDIENT_PRICE = {
 	salad: 0.5,
@@ -34,7 +38,6 @@ class BurgerBuilder extends Component {
 	// }
 
 	state = {
-		ingredients: null,
 		totalPrice: 2,
 		purchaseable: false,
 		purchasing: false,
@@ -44,14 +47,13 @@ class BurgerBuilder extends Component {
 
 	// Fetch the data from firebase
 	componentDidMount () {
-		//console.log(this.props);
-		axios.get('https://react-burger-project-01.firebaseio.com/ingredients.json')
-			.then(response => {
-				this.setState({ingredients: response.data});
-			})
-			.catch(error => {
-				this.setState({error: true});
-			});
+		// axios.get('https://react-burger-project-01.firebaseio.com/ingredients.json')
+		// 	.then(response => {
+		// 		this.setState({ingredients: response.data});
+		// 	})
+		// 	.catch(error => {
+		// 		this.setState({error: true});
+		// 	});
 	}
 
 	isPurchaseable (ingredients) {
@@ -126,7 +128,7 @@ class BurgerBuilder extends Component {
 
 	render () {
 		const disabledButtonObject = {
-			...this.state.ingredients
+			...this.props.reducer_ingredients
 		};
 
 		for (let key in disabledButtonObject) {
@@ -139,13 +141,13 @@ class BurgerBuilder extends Component {
 		// Placeholder while data is fetched from the server
 		let burgerAndBuilder = this.state.error ? <p> Sorry there is a network problem!</p> : <Spinner />;
 		// Once the data has been received, the spinner is swapped
-		if (this.state.ingredients) {
+		if (this.props.reducer_ingredients) {
 			burgerAndBuilder = (
 				<Aux>
-					<Burger ingredients={this.state.ingredients} />
+					<Burger ingredients={this.props.reducer_ingredients} />
 					<BuildControls 
-						ingredientAdded={this.addIngredient} 
-						ingredientRemoved={this.removeIngredient} 
+						ingredientAdded={this.props.reducer_add_ingredient} 
+						ingredientRemoved={this.props.reducer_remove_ingredient} 
 						disabled={disabledButtonObject}
 						purchaseable={!this.state.purchaseable}
 						purchase={this.purchaseBurger}
@@ -156,7 +158,7 @@ class BurgerBuilder extends Component {
 			// Set the order summary once the ingredients have been received from the server
 			orderSummary = <OrderSummary 
 						price={this.state.totalPrice}
-						ingredients={this.state.ingredients} 
+						ingredients={this.props.reducer_ingredients} 
 						cancel={this.stopPurchase}
 						continue={this.continuePurchase} />;
 		}
@@ -177,4 +179,16 @@ class BurgerBuilder extends Component {
 	}
 }
 
-export default globalErrors(BurgerBuilder, axios);
+const map_reducer_state_to_props = state => {
+	return {
+		reducer_ingredients: state.ingredients
+	}
+}
+
+const map_dispatch_action_to_props = dispatch => {
+	return {
+		reducer_add_ingredient: (name_from_props) => dispatch({type: actionTypes.ADD, ingredient_name: name_from_props}),
+		reducer_remove_ingredient: (name_from_props) => dispatch({type: actionTypes.REMOVE, ingredient_name: name_from_props})
+	}
+}
+export default connect(map_reducer_state_to_props, map_dispatch_action_to_props)(globalErrors(BurgerBuilder, axios));

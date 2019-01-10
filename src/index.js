@@ -4,13 +4,18 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import reducer from './reducer_store/reducer';
 
-
+const reducer_store_reducer = createStore(reducer);
 // Crate a JSX element that wraps the app component
 const routed_app = (
-	<BrowserRouter>
-		<App />
-	</BrowserRouter>
+	<Provider store={reducer_store_reducer}>
+		<BrowserRouter>
+			<App />
+		</BrowserRouter>
+	</Provider>
 );
 
 ReactDOM.render(routed_app, document.getElementById('root'));
