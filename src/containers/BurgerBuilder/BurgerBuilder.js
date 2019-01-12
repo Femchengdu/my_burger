@@ -21,14 +21,6 @@ import {connect} from 'react-redux';
 
 import * as actionTypes from '../../reducer_store/actions';
 
-// Global constants in all caps.
-const INGREDIENT_PRICE = {
-	salad: 0.5,
-	cheese: 0.4,
-	meat: 1.3,
-	bacon: 0.7
-};
-
 
 class BurgerBuilder extends Component {
 	// Alternative state method
@@ -38,7 +30,6 @@ class BurgerBuilder extends Component {
 	// }
 
 	state = {
-		totalPrice: 2,
 		purchaseable: false,
 		purchasing: false,
 		loading: false,
@@ -64,45 +55,6 @@ class BurgerBuilder extends Component {
 				return initialVal + nextVal;
 			}, 0);
 		this.setState({purchaseable: ingredSum > 0});
-	}
-
-	addIngredient = (type) => {
-		const oldCount = this.state.ingredients[type];
-		const updateCount = oldCount + 1;
-		const updateIngredients = {
-			...this.state.ingredients
-		};
-		// Here the ingredients have been updated
-		updateIngredients[type] = updateCount;
-		const addPrice = INGREDIENT_PRICE[type];
-		const oldTotal = this.state.totalPrice;
-		const newTotal = oldTotal + addPrice;
-		this.setState({
-			totalPrice: newTotal,
-			ingredients: updateIngredients
-		});
-		this.isPurchaseable(updateIngredients);
-	}
-
-	removeIngredient = (type) => {
-		const oldCount = this.state.ingredients[type];
-		if (this.state.ingredients[type] <= 0) {
-			return;
-		}
-		const updateCount = oldCount - 1;
-		const updateIngredients = {
-			...this.state.ingredients
-		};
-		// Here the ingredients have been updated
-		updateIngredients[type] = updateCount;
-		const subPrice = INGREDIENT_PRICE[type];
-		const oldTotal = this.state.totalPrice;
-		const newTotal = oldTotal - subPrice;
-		this.setState({
-			totalPrice: newTotal,
-			ingredients: updateIngredients
-		});
-		this.isPurchaseable(updateIngredients);
 	}
 
 	purchaseBurger = () => {
@@ -151,13 +103,13 @@ class BurgerBuilder extends Component {
 						disabled={disabledButtonObject}
 						purchaseable={!this.state.purchaseable}
 						purchase={this.purchaseBurger}
-						price={this.state.totalPrice} />
+						price={this.props.reducer_total_price} />
 				</Aux>
 			);
 
 			// Set the order summary once the ingredients have been received from the server
 			orderSummary = <OrderSummary 
-						price={this.state.totalPrice}
+						price={this.props.reducer_total_price}
 						ingredients={this.props.reducer_ingredients} 
 						cancel={this.stopPurchase}
 						continue={this.continuePurchase} />;
@@ -181,7 +133,8 @@ class BurgerBuilder extends Component {
 
 const map_reducer_state_to_props = state => {
 	return {
-		reducer_ingredients: state.ingredients
+		reducer_ingredients: state.ingredients,
+		reducer_total_price: state.totalPrice
 	}
 }
 
