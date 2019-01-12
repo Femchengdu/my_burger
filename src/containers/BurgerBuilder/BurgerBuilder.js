@@ -30,7 +30,6 @@ class BurgerBuilder extends Component {
 	// }
 
 	state = {
-		purchaseable: false,
 		purchasing: false,
 		loading: false,
 		error: false
@@ -54,7 +53,8 @@ class BurgerBuilder extends Component {
 			}).reduce((initialVal, nextVal) => {
 				return initialVal + nextVal;
 			}, 0);
-		this.setState({purchaseable: ingredSum > 0});
+		//this.setState({purchaseable: ingredSum > 0});
+		return ingredSum > 0;
 	}
 
 	purchaseBurger = () => {
@@ -66,16 +66,17 @@ class BurgerBuilder extends Component {
 	}
 
 	continuePurchase = () => {
-		const queryParams = [];
-		for (let key in this.state.ingredients) {
-			queryParams.push(encodeURIComponent(key) + '=' + encodeURIComponent(this.state.ingredients[key]))
-		}
-		queryParams.push('price=' + this.state.totalPrice);
-		const queryString = queryParams.join('&');
-		this.props.history.push({
-			pathname: '/checkout',
-			search: '?' + queryString
-		});
+		// const queryParams = [];
+		// for (let key in this.state.ingredients) {
+		// 	queryParams.push(encodeURIComponent(key) + '=' + encodeURIComponent(this.state.ingredients[key]))
+		// }
+		// queryParams.push('price=' + this.state.totalPrice);
+		// const queryString = queryParams.join('&');
+		// this.props.history.push({
+		// 	pathname: '/checkout',
+		// 	search: '?' + queryString
+		// });
+		this.props.history.push('/checkout');
 	}
 
 	render () {
@@ -101,7 +102,7 @@ class BurgerBuilder extends Component {
 						ingredientAdded={this.props.reducer_add_ingredient} 
 						ingredientRemoved={this.props.reducer_remove_ingredient} 
 						disabled={disabledButtonObject}
-						purchaseable={!this.state.purchaseable}
+						purchaseable={!this.isPurchaseable(this.props.reducer_ingredients)}
 						purchase={this.purchaseBurger}
 						price={this.props.reducer_total_price} />
 				</Aux>
