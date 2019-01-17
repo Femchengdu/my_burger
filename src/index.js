@@ -5,10 +5,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import burger_builder_reducer from './reducer_store/reducers/burger_builder_reducer';
+import thunk_middleware from 'redux-thunk';
 
-const reducer_store_reducer = createStore(burger_builder_reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const reducer_store_reducer = createStore(burger_builder_reducer, composeEnhancers(
+	applyMiddleware(thunk_middleware)
+));
 // Crate a JSX element that wraps the app component
 const routed_app = (
 	<Provider store={reducer_store_reducer}>
