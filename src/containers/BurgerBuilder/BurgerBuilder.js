@@ -19,7 +19,7 @@ import globalErrors from '../../hoc/globalErrors/globalErrors';
 
 import {connect} from 'react-redux';
 
-import * as actionTypes from '../../reducer_store/actions';
+import * as burger_builder_actions from '../../reducer_store/actions/index';
 
 
 class BurgerBuilder extends Component {
@@ -141,8 +141,8 @@ const map_reducer_state_to_props = state => {
 
 const map_dispatch_action_to_props = dispatch => {
 	return {
-		reducer_add_ingredient: (name_from_props) => dispatch({type: actionTypes.ADD, ingredient_name: name_from_props}),
-		reducer_remove_ingredient: (name_from_props) => dispatch({type: actionTypes.REMOVE, ingredient_name: name_from_props})
+		reducer_add_ingredient: (name_from_props) => dispatch(burger_builder_actions.add_ingredient_creator(name_from_props)),
+		reducer_remove_ingredient: (name_from_props) => dispatch(burger_builder_actions.remove_ingredient_creator(name_from_props))
 	}
 }
 export default connect(map_reducer_state_to_props, map_dispatch_action_to_props)(globalErrors(BurgerBuilder, axios));
