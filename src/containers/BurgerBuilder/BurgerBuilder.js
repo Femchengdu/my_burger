@@ -11,8 +11,6 @@ import Modal from '../../components/UI/Modal/Modal';
 
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
-import axios from '../../axios_orders';
-
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 import globalErrors from '../../hoc/globalErrors/globalErrors';
@@ -20,6 +18,8 @@ import globalErrors from '../../hoc/globalErrors/globalErrors';
 import {connect} from 'react-redux';
 
 import * as burger_builder_actions from '../../reducer_store/actions/index';
+
+import axios from '../../axios_orders';
 
 
 class BurgerBuilder extends Component {
@@ -30,20 +30,12 @@ class BurgerBuilder extends Component {
 	// }
 
 	state = {
-		purchasing: false,
-		loading: false,
-		error: false
+		purchasing: false
 	}
 
 	// Fetch the data from firebase
 	componentDidMount () {
-		// axios.get('https://react-burger-project-01.firebaseio.com/ingredients.json')
-		// 	.then(response => {
-		// 		this.setState({ingredients: response.data});
-		// 	})
-		// 	.catch(error => {
-		// 		this.setState({error: true});
-		// 	});
+		
 	}
 
 	isPurchaseable (ingredients) {
@@ -116,11 +108,7 @@ class BurgerBuilder extends Component {
 						continue={this.continuePurchase} />;
 		}
 
-		// Set the order summary if ingredients have been received and order is being sent to the server
-		if (this.state.loading) {
-			orderSummary = <Spinner />;
-		}
-				
+		// Set the order summary if ingredients have been received and order is being sent to the server		
 		return (
 			<Aux>
 				<Modal show={this.state.purchasing} close={this.stopPurchase} >

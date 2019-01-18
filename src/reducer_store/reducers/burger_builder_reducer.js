@@ -1,13 +1,9 @@
 import * as action_types from '../actions/action_types';
 
 const initialState = {
-	ingredients: {
-		salad: 0,
-		bacon: 0,
-		cheese: 0,
-		meat: 0
-	},
-	totalPrice: 2
+	ingredients: null,
+	totalPrice: 2,
+	error: false
 }
 
 // Global constants in all caps.
