@@ -35,7 +35,7 @@ class BurgerBuilder extends Component {
 
 	// Fetch the data from firebase
 	componentDidMount () {
-		
+		this.props.reducer_init_ingerdients();
 	}
 
 	isPurchaseable (ingredients) {
@@ -84,7 +84,7 @@ class BurgerBuilder extends Component {
 		let orderSummary = null;
 		
 		// Placeholder while data is fetched from the server
-		let burgerAndBuilder = this.state.error ? <p> Sorry there is a network problem!</p> : <Spinner />;
+		let burgerAndBuilder = this.props.reducer_error ? <p> Sorry there is a network problem!</p> : <Spinner />;
 		// Once the data has been received, the spinner is swapped
 		if (this.props.reducer_ingredients) {
 			burgerAndBuilder = (
@@ -123,14 +123,16 @@ class BurgerBuilder extends Component {
 const map_reducer_state_to_props = state => {
 	return {
 		reducer_ingredients: state.ingredients,
-		reducer_total_price: state.totalPrice
+		reducer_total_price: state.totalPrice,
+		reducer_error: state.error
 	}
 }
 
 const map_dispatch_action_to_props = dispatch => {
 	return {
 		reducer_add_ingredient: (name_from_props) => dispatch(burger_builder_actions.add_ingredient_creator(name_from_props)),
-		reducer_remove_ingredient: (name_from_props) => dispatch(burger_builder_actions.remove_ingredient_creator(name_from_props))
+		reducer_remove_ingredient: (name_from_props) => dispatch(burger_builder_actions.remove_ingredient_creator(name_from_props)),
+		reducer_init_ingerdients: () => dispatch(burger_builder_actions.ingredients_initialization_fetch_creator())
 	}
 }
 export default connect(map_reducer_state_to_props, map_dispatch_action_to_props)(globalErrors(BurgerBuilder, axios));

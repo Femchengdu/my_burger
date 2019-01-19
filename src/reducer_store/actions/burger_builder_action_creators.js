@@ -31,7 +31,7 @@ const set_ingredients_fetch_error_creator = () => {
 	}
 }
 
-export const ingredients_initialization_fetch = () => {
+export const ingredients_initialization_fetch_creator = () => {
 	return dispatch => {
 		axios.get('https://react-burger-project-01.firebaseio.com/ingredients.json')
 		.then(response => {
