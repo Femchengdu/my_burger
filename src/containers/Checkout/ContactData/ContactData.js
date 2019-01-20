@@ -109,7 +109,7 @@ class ContacData extends Component {
 	// This syntax enables use with events
 	orderMethod = (event) => {
 		event.preventDefault();
-		this.setState({loading: true});
+		//this.setState({loading: true});
 		//console.log(typeof this.props.price);
 		const formData = {};
 		for (let orderId in this.state.orderForm) {

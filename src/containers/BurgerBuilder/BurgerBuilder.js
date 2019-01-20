@@ -58,16 +58,7 @@ class BurgerBuilder extends Component {
 	}
 
 	continuePurchase = () => {
-		// const queryParams = [];
-		// for (let key in this.state.ingredients) {
-		// 	queryParams.push(encodeURIComponent(key) + '=' + encodeURIComponent(this.state.ingredients[key]))
-		// }
-		// queryParams.push('price=' + this.state.totalPrice);
-		// const queryString = queryParams.join('&');
-		// this.props.history.push({
-		// 	pathname: '/checkout',
-		// 	search: '?' + queryString
-		// });
+		this.props.reducer_purchase_reset();
 		this.props.history.push('/checkout');
 	}
 
@@ -132,7 +123,8 @@ const map_dispatch_action_to_props = dispatch => {
 	return {
 		reducer_add_ingredient: (name_from_props) => dispatch(burger_builder_actions.add_ingredient_creator(name_from_props)),
 		reducer_remove_ingredient: (name_from_props) => dispatch(burger_builder_actions.remove_ingredient_creator(name_from_props)),
-		reducer_init_ingerdients: () => dispatch(burger_builder_actions.ingredients_initialization_fetch_creator())
+		reducer_init_ingerdients: () => dispatch(burger_builder_actions.ingredients_initialization_fetch_creator()),
+		reducer_purchase_reset: () => dispatch(burger_builder_actions.purchase_reset_creator())
 	}
 }
 export default connect(map_reducer_state_to_props, map_dispatch_action_to_props)(globalErrors(BurgerBuilder, axios));
