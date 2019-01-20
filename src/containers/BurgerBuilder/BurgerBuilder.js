@@ -122,9 +122,9 @@ class BurgerBuilder extends Component {
 
 const map_reducer_state_to_props = state => {
 	return {
-		reducer_ingredients: state.ingredients,
-		reducer_total_price: state.totalPrice,
-		reducer_error: state.error
+		reducer_ingredients: state.burger_builder_in_combined_reducer.ingredients,
+		reducer_total_price: state.burger_builder_in_combined_reducer.totalPrice,
+		reducer_error: state.burger_builder_in_combined_reducer.error
 	}
 }
 

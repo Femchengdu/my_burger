@@ -5,17 +5,22 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware, compose} from 'redux';
+import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import burger_builder_reducer from './reducer_store/reducers/burger_builder_reducer';
+import order_reducer from './reducer_store/reducers/order_reducer';
 import thunk_middleware from 'redux-thunk';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const reducer_store_reducer = createStore(burger_builder_reducer, composeEnhancers(
+const combined_reducers = combineReducers({
+	burger_builder_in_combined_reducer: burger_builder_reducer,
+	order_in_combined_reducer: order_reducer
+}) 
+const redux_state_tree_store = createStore(combined_reducers, composeEnhancers(
 	applyMiddleware(thunk_middleware)
 ));
 // Crate a JSX element that wraps the app component
 const routed_app = (
-	<Provider store={reducer_store_reducer}>
+	<Provider store={redux_state_tree_store}>
 		<BrowserRouter>
 			<App />
 		</BrowserRouter>

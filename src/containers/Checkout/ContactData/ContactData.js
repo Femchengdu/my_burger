@@ -1,4 +1,4 @@
-//................
+//.................
 import React, {Component} from 'react';
 
 import Button from '../../../components/UI/Button/Button';
@@ -13,7 +13,7 @@ import Input from '../../../components/UI/Input/Input';
 
 import {connect} from 'react-redux';
 
-import globalErrors from '../../hoc/globalErrors/globalErrors';
+import globalErrors from '../../../hoc/globalErrors/globalErrors';
 
 import * as contact_data_order_actions from '../../../reducer_store/actions/index';
 
@@ -103,8 +103,7 @@ class ContacData extends Component {
 				valid: true
 			}
 		},
-		isFormValid: false,
-		loading: false
+		isFormValid: false
 	}
 
 	// This syntax enables use with events
@@ -189,7 +188,7 @@ class ContacData extends Component {
 			</form>
 		);
 
-		if (this.state.loading) {
+		if (this.props.reducer_order_loading_status) {
 			form = <Spinner />;
 		}
 		return (
@@ -203,15 +202,16 @@ class ContacData extends Component {
 
 const map_redux_state_to_props = state =>  {
 	return {
-		reducer_ingredients: state.ingredients,
-		reducer_total_price: state.totalPrice
+		reducer_ingredients: state.burger_builder_in_combined_reducer.ingredients,
+		reducer_total_price: state.burger_builder_in_combined_reducer.totalPrice,
+		reducer_order_loading_status: state.order_in_combined_reducer.loading
 	}
 }
 
 const map_dispatch_action_to_props = dispatch => {
 	return {
-		reducer_start_order: (order_data) => dispatch(contact_data_order_actions.start_burger_purchase_creator(order_data))
+		reducer_start_order: (order_data) => dispatch(contact_data_order_actions.burger_purchase_creator(order_data))
 	}
 }
 
-export default connect(map_redux_state_to_props)(globalErrors(ContacData, axios));
+export default connect(map_redux_state_to_props, map_dispatch_action_to_props)(globalErrors(ContacData, axios));
