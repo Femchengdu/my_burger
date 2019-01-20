@@ -13,6 +13,10 @@ import Input from '../../../components/UI/Input/Input';
 
 import {connect} from 'react-redux';
 
+import globalErrors from '../../hoc/globalErrors/globalErrors';
+
+import * as contact_data_order_actions from '../../../reducer_store/actions/index';
+
 class ContacData extends Component {
 	state = {
 		orderForm: {
@@ -118,6 +122,7 @@ class ContacData extends Component {
 			orderDetails: formData
 		}
 
+		this.props.reducer_start_order(order);
 	}
 
 	validationCheck(value, rules) {
@@ -203,4 +208,10 @@ const map_redux_state_to_props = state =>  {
 	}
 }
 
-export default connect(map_redux_state_to_props)(ContacData);
+const map_dispatch_action_to_props = dispatch => {
+	return {
+		reducer_start_order: (order_data) => dispatch(contact_data_order_actions.start_burger_purchase_creator(order_data))
+	}
+}
+
+export default connect(map_redux_state_to_props)(globalErrors(ContacData, axios));
