@@ -6,5 +6,6 @@ export {
 
 export {
 	burger_purchase_creator,
-	purchase_reset_creator
+	purchase_reset_creator,
+	fetch_orders_creator
 } from './order_action_creators';

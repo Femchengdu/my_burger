@@ -29,7 +29,6 @@ export const burger_purchase_creator = (order_data) => {
 		dispatch(start_burger_purchase_creator());
 		axios.post('/orders.json', order_data)
 			.then(response => {
-				console.log(response.data);
 				dispatch(successful_burger_purchase_creator(response.data.name, order_data));
 			})
 			.catch(error => {
@@ -41,5 +40,46 @@ export const burger_purchase_creator = (order_data) => {
 export const purchase_reset_creator = () => {
 	return {
 		type: action_types.purchase_reset
+	}
+}
+
+// Fetching Orders
+const order_fetching_success_creator = (orders) => {
+	return {
+		type: action_types.order_fetching_success,
+		received_orders: orders
+	}
+}
+
+const order_fetching_fail_creator = (error) => {
+	return {
+		type: action_types.order_fetching_fail,
+		order_errors: error
+	}
+}
+
+const order_fetching_start_creator = () => {
+	return {
+		type: action_types.order_fetching_start
+	}
+}
+
+export const fetch_orders_creator = () => {
+	return dispatch => {
+		dispatch(order_fetching_start_creator());
+		axios.get('/orders.json')
+			.then(result => {
+				const fetched_orders = [];
+				for (let orderId in result.data) {
+					fetched_orders.push({
+						...result.data[orderId],
+						id: orderId
+					});
+				}
+				dispatch(order_fetching_success_creator(fetched_orders));
+			})
+			.catch(error => {
+				dispatch(order_fetching_fail_creator(error));
+			})
 	}
 }
