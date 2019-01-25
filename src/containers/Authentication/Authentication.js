@@ -101,6 +101,7 @@ class Authentication extends Component {
 			/>
 		));
 
+
 		return (
 			<div className={classes.Authentication}>
 				<form>
