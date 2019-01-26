@@ -12,3 +12,7 @@ export const purchase_reset = 'PURCHASE_RESET';
 export const order_fetching_start = 'ORDER_FETCHING_START';
 export const order_fetching_success = 'ORDER_FETCHING_SUCCESS';
 export const order_fetching_fail = 'ORDER_FETCHING_FAIL';
+// Authentication actions
+export const authentication_start = 'AUTHENTICATION_START';
+export const authentication_success = 'AUTHENTICATION_SUCCESS';
+export const authentication_failure = 'AUTHENTICATION_FAILURE';

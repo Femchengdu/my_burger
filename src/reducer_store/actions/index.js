@@ -9,3 +9,7 @@ export {
 	purchase_reset_creator,
 	fetch_orders_creator
 } from './order_action_creators';
+
+export {
+	async_authentication_request_creator
+} from './authentication_action_creators';

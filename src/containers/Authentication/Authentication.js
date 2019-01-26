@@ -1,4 +1,4 @@
-//.....................
+//.........................
 import React, {Component} from 'react';
 
 import Input from '../../components/UI/Input/Input';
@@ -6,6 +6,10 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 
 import classes from './Authentication.css'
+
+import * as authentication_actions from '../../reducer_store/actions/index';
+
+import {connect} from 'react-redux';
 
 class Authentication extends Component {
 	state = {
@@ -56,6 +60,7 @@ class Authentication extends Component {
 		}
 
 		if (rules.isEmail) {
+			// eslint-disable-next-line
 			const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			isValid = pattern.test(value) && isValid
 		}
@@ -65,7 +70,6 @@ class Authentication extends Component {
 
 
 	on_input_change = (event, element_name) => {
-		console.log({...this.state.form_elements[element_name]}, event.target.value);
 		const updated_form_elements = {
 			...this.state.form_elements,
 			[element_name]: {
@@ -76,6 +80,11 @@ class Authentication extends Component {
 			}
 		}
 		this.setState({form_elements: updated_form_elements});
+	}
+
+	submit_authentication_details = (event) => {
+		event.preventDefault();
+		this.props.reducer_authentication_request(this.state.form_elements.email.value, this.state.form_elements.password.value);
 	}
 
 	render () {
@@ -104,7 +113,7 @@ class Authentication extends Component {
 
 		return (
 			<div className={classes.Authentication}>
-				<form>
+				<form onSubmit={this.submit_authentication_details}>
 					{form_inputs}
 					<Button type='Success'>Sign in</Button>
 				</form>
@@ -113,4 +122,10 @@ class Authentication extends Component {
 	} 
 }
 
-export default Authentication;
+const map_dispatch_action_to_props = dispatch => {
+	return {
+		reducer_authentication_request: (email, password) => dispatch(authentication_actions.async_authentication_request_creator(email, password))
+	}
+}
+
+export default connect(null, map_dispatch_action_to_props)(Authentication);
