@@ -3,6 +3,9 @@ import * as action_types from './action_types';
 
 import axios from 'axios';
 
+import * as web_auth_keys from '../../api_config';
+
+const auth_api_token = web_auth_keys.firebase_api_key.api_key;
 
 const authentication_start_creator = () => {
 	return {
