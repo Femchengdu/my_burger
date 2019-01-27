@@ -27,7 +27,7 @@ const authentication_failiure_creator = (error_response) => {
 	}
 }
 
-export const async_authentication_request_creator = (email, password) => {
+export const async_authentication_request_creator = (email, password, signed_up_status) => {
 	return dispatch => {
 		dispatch(authentication_start_creator());
 		const signup_data = {
@@ -35,7 +35,12 @@ export const async_authentication_request_creator = (email, password) => {
 			password: password,
 			returnSecureToken: true
 		}
-		axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + auth_api_token, signup_data)
+
+		let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=';
+		if (!signed_up_status) {
+			url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=';
+		}
+		axios.post( url + auth_api_token, signup_data)
 			.then(response => {
 				console.log(response);
 				dispatch(authentication_success_creator(response.data));

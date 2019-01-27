@@ -1,4 +1,4 @@
-//.........................
+//..........................
 import React, {Component} from 'react';
 
 import Input from '../../components/UI/Input/Input';
@@ -42,7 +42,8 @@ class Authentication extends Component {
 				valid: false,
 				touched: false
 			}
-		}
+		},
+		signup_status: true
 	}
 
 	validation_checker = (value, rules) => {
@@ -84,7 +85,13 @@ class Authentication extends Component {
 
 	submit_authentication_details = (event) => {
 		event.preventDefault();
-		this.props.reducer_authentication_request(this.state.form_elements.email.value, this.state.form_elements.password.value);
+		this.props.reducer_authentication_request(this.state.form_elements.email.value, this.state.form_elements.password.value, this.state.signup_status);
+	}
+
+	toggle_authentication_mode = () => {
+		this.setState(prevState => {
+			return {signup_status: !prevState.signup_status}
+		});
 	}
 
 	render () {
@@ -117,6 +124,9 @@ class Authentication extends Component {
 					{form_inputs}
 					<Button type='Success'>Sign in</Button>
 				</form>
+				<Button 
+					type='Danger'
+					clicked={this.toggle_authentication_mode}>Toggle To {this.state.signup_status ? 'SIGNIN' : 'SIGNUP'}</Button>
 			</div>
 		);
 	} 
@@ -124,7 +134,7 @@ class Authentication extends Component {
 
 const map_dispatch_action_to_props = dispatch => {
 	return {
-		reducer_authentication_request: (email, password) => dispatch(authentication_actions.async_authentication_request_creator(email, password))
+		reducer_authentication_request: (email, password, signup_status) => dispatch(authentication_actions.async_authentication_request_creator(email, password, signup_status))
 	}
 }
 
