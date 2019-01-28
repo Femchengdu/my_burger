@@ -1,4 +1,4 @@
-//...
+//.....
 import * as action_types from './action_types';
 
 import axios from 'axios';
@@ -13,10 +13,11 @@ const authentication_start_creator = () => {
 	}
 }
 
-const authentication_success_creator = (authentication_token) => {
+const authentication_success_creator = (response) => {
 	return {
 		type: action_types.authentication_success,
-		token: authentication_token
+		token: response.data.idToken,
+		user_id: response.data.localId
 	}
 }
 
@@ -43,7 +44,7 @@ export const async_authentication_request_creator = (email, password, signed_up_
 		axios.post( url + auth_api_token, signup_data)
 			.then(response => {
 				console.log(response);
-				dispatch(authentication_success_creator(response.data));
+				dispatch(authentication_success_creator(response));
 			})
 			.catch(error => {
 				console.log(error);
