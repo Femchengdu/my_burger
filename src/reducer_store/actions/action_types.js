@@ -16,3 +16,4 @@ export const order_fetching_fail = 'ORDER_FETCHING_FAIL';
 export const authentication_start = 'AUTHENTICATION_START';
 export const authentication_success = 'AUTHENTICATION_SUCCESS';
 export const authentication_failure = 'AUTHENTICATION_FAILURE';
+export const authentication_logout = 'AUTHENTICATION_LOGOUT';

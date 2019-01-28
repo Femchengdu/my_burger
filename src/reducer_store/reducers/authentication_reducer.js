@@ -38,6 +38,14 @@ const reducer_authentication_failure = (state, action) => {
 	return object_updater(state, updated_properties);
 } 
 
+const reducer_authentication_logout = (state) => {
+	const updated_properties = {
+		token: null,
+		user_id: null
+	}
+	return object_updater(state, updated_properties);
+}
+
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case action_types.authentication_start:
@@ -46,6 +54,8 @@ const reducer = (state = initialState, action) => {
 			return reducer_authentication_success(state, action);
 		case action_types.authentication_failure:
 			return reducer_authentication_failure(state, action);
+		case action_types.authentication_logout:
+			return reducer_authentication_logout(state);
 		default:
 			return state;
 	}
