@@ -9,6 +9,8 @@ import classes from './Authentication.css'
 
 import * as authentication_actions from '../../reducer_store/actions/index';
 
+import Spinner from '../../components/UI/Spinner/Spinner';
+
 import {connect} from 'react-redux';
 
 class Authentication extends Component {
@@ -104,7 +106,7 @@ class Authentication extends Component {
 			});
 		}
 
-		const form_inputs = form_elements.map(element => (
+		let form_inputs = form_elements.map(element => (
 			<Input 
 				key={element.id}
 				elementType={element.config.elementType}
@@ -117,9 +119,21 @@ class Authentication extends Component {
 			/>
 		));
 
+		if (this.props.reducer_loading_status) {
+			form_inputs = <Spinner />
+		}
+
+		let error_element = null;
+
+		if (this.props.reducer_error_status) {
+			error_element = (
+				<p>{this.props.reducer_error_status.message}</p>
+			);
+		}
 
 		return (
 			<div className={classes.Authentication}>
+				{error_element}
 				<form onSubmit={this.submit_authentication_details}>
 					{form_inputs}
 					<Button type='Success'>Sign in</Button>
@@ -132,10 +146,17 @@ class Authentication extends Component {
 	} 
 }
 
+const map_reducer_state_to_props = state => {
+	return {
+		reducer_loading_status: state.authentication_in_combined_reducer.loading,
+		reducer_error_status: state.authentication_in_combined_reducer.error
+	}
+}
+
 const map_dispatch_action_to_props = dispatch => {
 	return {
 		reducer_authentication_request: (email, password, signup_status) => dispatch(authentication_actions.async_authentication_request_creator(email, password, signup_status))
 	}
 }
 
-export default connect(null, map_dispatch_action_to_props)(Authentication);
+export default connect(map_reducer_state_to_props, map_dispatch_action_to_props)(Authentication);
