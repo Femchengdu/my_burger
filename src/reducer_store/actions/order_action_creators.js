@@ -24,10 +24,10 @@ const start_burger_purchase_creator = () => {
 	}
 }
 
-export const burger_purchase_creator = (order_data) => {
+export const burger_purchase_creator = (order_data, auth_token) => {
 	return dispatch => {
 		dispatch(start_burger_purchase_creator());
-		axios.post('/orders.json', order_data)
+		axios.post('/orders.json?auth=' + auth_token, order_data)
 			.then(response => {
 				dispatch(successful_burger_purchase_creator(response.data.name, order_data));
 			})
@@ -64,10 +64,10 @@ const order_fetching_start_creator = () => {
 	}
 }
 
-export const fetch_orders_creator = () => {
+export const fetch_orders_creator = (auth_token) => {
 	return dispatch => {
 		dispatch(order_fetching_start_creator());
-		axios.get('/orders.json')
+		axios.get('/orders.json?auth=' + auth_token )
 			.then(result => {
 				const fetched_orders = [];
 				for (let orderId in result.data) {

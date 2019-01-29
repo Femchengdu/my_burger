@@ -121,7 +121,7 @@ class ContacData extends Component {
 			orderDetails: formData
 		}
 
-		this.props.reducer_start_order(order);
+		this.props.reducer_start_order(order, this.props.reducer_authentication_token);
 	}
 
 	validationCheck(value, rules) {
@@ -204,13 +204,14 @@ const map_redux_state_to_props = state =>  {
 	return {
 		reducer_ingredients: state.burger_builder_in_combined_reducer.ingredients,
 		reducer_total_price: state.burger_builder_in_combined_reducer.totalPrice,
-		reducer_order_loading_status: state.order_in_combined_reducer.loading
+		reducer_order_loading_status: state.order_in_combined_reducer.loading,
+		reducer_authentication_token: state.authentication_in_combined_reducer.token
 	}
 }
 
 const map_dispatch_action_to_props = dispatch => {
 	return {
-		reducer_start_order: (order_data) => dispatch(contact_data_order_actions.burger_purchase_creator(order_data))
+		reducer_start_order: (order_data, auth_token) => dispatch(contact_data_order_actions.burger_purchase_creator(order_data, auth_token))
 	}
 }
 

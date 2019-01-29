@@ -17,7 +17,7 @@ class PrevOrders extends Component {
 
 
 	componentDidMount () {
-		this.props.reducer_fetch_orders();
+		this.props.reducer_fetch_orders(this.props.reducer_authentication_token);
 	}
 
 	render () {
@@ -40,13 +40,14 @@ class PrevOrders extends Component {
 const map_reducer_state_to_props = state => {
 	return {
 		reducer_orders: state.order_in_combined_reducer.orders,
-		reducer_orders_loading: state.order_in_combined_reducer.loading
+		reducer_orders_loading: state.order_in_combined_reducer.loading,
+		reducer_authentication_token: state.authentication_in_combined_reducer.token
 	}
 }
 
 const map_dispatch_action_to_props = dispatch => {
 	return {
-		reducer_fetch_orders: () => dispatch(order_fetching_actions.fetch_orders_creator())
+		reducer_fetch_orders: (auth_token) => dispatch(order_fetching_actions.fetch_orders_creator(auth_token))
 	}
 }
 
