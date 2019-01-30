@@ -7,6 +7,8 @@ import classes from './Layout.css';
 
 import Toolbar from '../Navigation/Toolbar/Toolbar';
 
+import {connect} from 'react-redux';
+
 import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 
 // Single root element achieve with hoc Aux
@@ -30,10 +32,13 @@ class Layout extends Component {
 	render () {
 		return (
 			<Aux>
-				<Toolbar toggleClick={this.toggle_method}/>
-				<SideDrawer 
-				open={this.state.showSide} 
-				closed={this.sideClose}/>
+				<Toolbar
+					layout_is_user_authenticated={this.props.reducer_authentication_status}
+					toggleClick={this.toggle_method}/>
+				<SideDrawer
+					layout_is_user_authenticated={this.props.reducer_authentication_status} 
+					open={this.state.showSide} 
+					closed={this.sideClose}/>
 				<main className={classes.Content}>
 					{this.props.children}
 				</main>
@@ -42,4 +47,10 @@ class Layout extends Component {
 	}
 }
 
-export default Layout;
+const map_reducer_state_to_props = state => {
+	return {
+		reducer_authentication_status: state.authentication_in_combined_reducer.token !== null
+	}
+}
+
+export default connect(map_reducer_state_to_props)(Layout);

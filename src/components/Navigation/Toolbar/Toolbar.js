@@ -12,9 +12,11 @@ import ToggleSide from '../SideDrawer/ToggleSide/ToggleSide';
 const toolbar = (props) => (
 	<header className={classes.Toolbar} >
 		<ToggleSide clicked={props.toggleClick}/>
-		<Logo />
+		<div className={classes.Logo}>
+			<Logo />
+		</div>
 		<nav className={classes.DesktopOnly} >
-			<NavItems />
+			<NavItems is_user_authenticated={props.layout_is_user_authenticated} />
 		</nav>
 	</header>
 
