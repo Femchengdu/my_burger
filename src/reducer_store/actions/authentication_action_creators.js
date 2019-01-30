@@ -28,7 +28,7 @@ const authentication_failiure_creator = (error_response) => {
 	}
 }
 
-const logout_creator = () => {
+export const logout_creator = () => {
 	return {
 		type: action_types.authentication_logout
 	}

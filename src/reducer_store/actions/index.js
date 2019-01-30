@@ -11,5 +11,6 @@ export {
 } from './order_action_creators';
 
 export {
-	async_authentication_request_creator
+	async_authentication_request_creator,
+	logout_creator
 } from './authentication_action_creators';

@@ -13,6 +13,8 @@ import PrevOrders from './containers/PrevOrders/PrevOrders';
 
 import Authentication from './containers/Authentication/Authentication';
 
+import Logout from './containers/Authentication/Logout/Logout';
+
 class App extends Component {
 	/*
 		Because the (path prop ) '/' is treated as a prefix path/route,
@@ -27,7 +29,8 @@ class App extends Component {
         	<Route path='/' exact component={BurgerBuilder} />
         	<Route path='/checkout' component={Checkout} />
           <Route path='/prev-orders' component={PrevOrders} />
-          <Route path='/authentication' component={Authentication} /> 
+          <Route path='/authentication' component={Authentication} />
+          <Route path='/logout' component={Logout} />
         </Layout>
       </div>
     );
