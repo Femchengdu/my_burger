@@ -23,12 +23,7 @@ import axios from '../../axios_orders';
 
 
 class BurgerBuilder extends Component {
-	// Alternative state method
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {...}
-	// }
-
+	
 	state = {
 		purchasing: false
 	}
@@ -50,7 +45,12 @@ class BurgerBuilder extends Component {
 	}
 
 	purchaseBurger = () => {
-		this.setState({purchasing: true});
+		if (this.props.reducer_authentication_status) {
+			this.setState({purchasing: true});
+		} else {
+			this.props.history.push('/authentication');
+		}
+		
 	}
 
 	stopPurchase = () => {
@@ -87,6 +87,7 @@ class BurgerBuilder extends Component {
 						disabled={disabledButtonObject}
 						purchaseable={!this.isPurchaseable(this.props.reducer_ingredients)}
 						purchase={this.purchaseBurger}
+						is_user_authenticated={this.props.reducer_authentication_status}
 						price={this.props.reducer_total_price} />
 				</Aux>
 			);
@@ -115,7 +116,8 @@ const map_reducer_state_to_props = state => {
 	return {
 		reducer_ingredients: state.burger_builder_in_combined_reducer.ingredients,
 		reducer_total_price: state.burger_builder_in_combined_reducer.totalPrice,
-		reducer_error: state.burger_builder_in_combined_reducer.error
+		reducer_error: state.burger_builder_in_combined_reducer.error,
+		reducer_authentication_status: state.authentication_in_combined_reducer.token !== null
 	}
 }
 

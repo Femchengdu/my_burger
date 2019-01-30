@@ -13,6 +13,8 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 import {connect} from 'react-redux';
 
+import {Redirect} from 'react-router-dom';
+
 class Authentication extends Component {
 	state = {
 		form_elements: {
@@ -131,8 +133,15 @@ class Authentication extends Component {
 			);
 		}
 
+		let after_authorization_redirect_element = null;
+
+		if (this.props.reducer_authentication_status) {
+			after_authorization_redirect_element = <Redirect to='/' />
+		}
+
 		return (
 			<div className={classes.Authentication}>
+				{after_authorization_redirect_element}
 				{error_element}
 				<form onSubmit={this.submit_authentication_details}>
 					{form_inputs}
@@ -149,7 +158,8 @@ class Authentication extends Component {
 const map_reducer_state_to_props = state => {
 	return {
 		reducer_loading_status: state.authentication_in_combined_reducer.loading,
-		reducer_error_status: state.authentication_in_combined_reducer.error
+		reducer_error_status: state.authentication_in_combined_reducer.error,
+		reducer_authentication_status: state.authentication_in_combined_reducer.token !== null
 	}
 }
 
