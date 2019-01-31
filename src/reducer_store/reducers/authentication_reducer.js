@@ -5,7 +5,8 @@ const initialState = {
 	token: null,
 	user_id: null,
 	error: null,
-	loading: false
+	loading: false,
+	after_authentication_redirect_path: '/'
 }
 
 const object_updater = (old_object, updated_properties) => {
@@ -46,6 +47,13 @@ const reducer_authentication_logout = (state) => {
 	return object_updater(state, updated_properties);
 }
 
+const reducer_set_authentication_redirect_path = (state, action) => {
+	const updated_properties = {
+		after_authentication_redirect_path: action.path
+	}
+	return object_updater(state, updated_properties);
+}
+
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case action_types.authentication_start:
@@ -56,6 +64,8 @@ const reducer = (state = initialState, action) => {
 			return reducer_authentication_failure(state, action);
 		case action_types.authentication_logout:
 			return reducer_authentication_logout(state);
+		case action_types.authentication_redirect_path:
+			return reducer_set_authentication_redirect_path(state, action)
 		default:
 			return state;
 	}

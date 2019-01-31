@@ -50,6 +50,12 @@ class Authentication extends Component {
 		signup_status: true
 	}
 
+	componentDidMount() {
+		if (!this.props.reducer_burger_building_status && this.props.reducer_authentication_redirect_path !== '/') {
+			this.props.reducer_authentication_reset_path();
+		}
+	}
+
 	validation_checker = (value, rules) => {
 		let isValid = true;
 		if (rules.required) {
@@ -136,7 +142,7 @@ class Authentication extends Component {
 		let after_authorization_redirect_element = null;
 
 		if (this.props.reducer_authentication_status) {
-			after_authorization_redirect_element = <Redirect to='/' />
+			after_authorization_redirect_element = <Redirect to={this.props.reducer_authentication_redirect_path} />
 		}
 
 		return (
@@ -159,13 +165,16 @@ const map_reducer_state_to_props = state => {
 	return {
 		reducer_loading_status: state.authentication_in_combined_reducer.loading,
 		reducer_error_status: state.authentication_in_combined_reducer.error,
-		reducer_authentication_status: state.authentication_in_combined_reducer.token !== null
+		reducer_authentication_status: state.authentication_in_combined_reducer.token !== null,
+		reducer_burger_building_status: state.burger_builder_in_combined_reducer.building_burger,
+		reducer_authentication_redirect_path: state.authentication_in_combined_reducer.after_authentication_redirect_path
 	}
 }
 
 const map_dispatch_action_to_props = dispatch => {
 	return {
-		reducer_authentication_request: (email, password, signup_status) => dispatch(authentication_actions.async_authentication_request_creator(email, password, signup_status))
+		reducer_authentication_request: (email, password, signup_status) => dispatch(authentication_actions.async_authentication_request_creator(email, password, signup_status)),
+		reducer_authentication_reset_path: () => dispatch(authentication_actions.set_authentication_redirect_path_creator('/'))
 	}
 }
 

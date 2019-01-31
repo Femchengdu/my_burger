@@ -12,5 +12,6 @@ export {
 
 export {
 	async_authentication_request_creator,
-	logout_creator
+	logout_creator,
+	set_authentication_redirect_path_creator
 } from './authentication_action_creators';

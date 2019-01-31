@@ -48,6 +48,7 @@ class BurgerBuilder extends Component {
 		if (this.props.reducer_authentication_status) {
 			this.setState({purchasing: true});
 		} else {
+			this.props.reducer_set_redirect_path('/checkout');
 			this.props.history.push('/authentication');
 		}
 		
@@ -126,7 +127,8 @@ const map_dispatch_action_to_props = dispatch => {
 		reducer_add_ingredient: (name_from_props) => dispatch(burger_builder_actions.add_ingredient_creator(name_from_props)),
 		reducer_remove_ingredient: (name_from_props) => dispatch(burger_builder_actions.remove_ingredient_creator(name_from_props)),
 		reducer_init_ingerdients: () => dispatch(burger_builder_actions.ingredients_initialization_fetch_creator()),
-		reducer_purchase_reset: () => dispatch(burger_builder_actions.purchase_reset_creator())
+		reducer_purchase_reset: () => dispatch(burger_builder_actions.purchase_reset_creator()),
+		reducer_set_redirect_path: (redirect_path) => dispatch(burger_builder_actions.set_authentication_redirect_path_creator(redirect_path))
 	}
 }
 export default connect(map_reducer_state_to_props, map_dispatch_action_to_props)(globalErrors(BurgerBuilder, axios));

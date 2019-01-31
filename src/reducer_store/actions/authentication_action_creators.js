@@ -42,6 +42,13 @@ const authentication_timeout_creator = (timeout) => {
 	}
 }
 
+export const set_authentication_redirect_path_creator = (redirect_path) => {
+	return {
+		type: action_types.authentication_redirect_path,
+		path: redirect_path
+	}
+}
+
 export const async_authentication_request_creator = (email, password, signed_up_status) => {
 	return dispatch => {
 		dispatch(authentication_start_creator());
