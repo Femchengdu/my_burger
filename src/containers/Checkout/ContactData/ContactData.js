@@ -118,7 +118,8 @@ class ContacData extends Component {
 		const order = {
 			ingredients: this.props.reducer_ingredients,
 			price: this.props.reducer_total_price.toFixed(2),
-			orderDetails: formData
+			orderDetails: formData,
+			user_id: this.props.reducer_user_id
 		}
 
 		this.props.reducer_start_order(order, this.props.reducer_authentication_token);
@@ -205,7 +206,8 @@ const map_redux_state_to_props = state =>  {
 		reducer_ingredients: state.burger_builder_in_combined_reducer.ingredients,
 		reducer_total_price: state.burger_builder_in_combined_reducer.totalPrice,
 		reducer_order_loading_status: state.order_in_combined_reducer.loading,
-		reducer_authentication_token: state.authentication_in_combined_reducer.token
+		reducer_authentication_token: state.authentication_in_combined_reducer.token,
+		reducer_user_id: state.authentication_in_combined_reducer.user_id
 	}
 }
 

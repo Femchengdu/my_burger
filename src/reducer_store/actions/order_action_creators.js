@@ -64,10 +64,11 @@ const order_fetching_start_creator = () => {
 	}
 }
 
-export const fetch_orders_creator = (auth_token) => {
+export const fetch_orders_creator = (auth_token, user_id) => {
 	return dispatch => {
 		dispatch(order_fetching_start_creator());
-		axios.get('/orders.json?auth=' + auth_token )
+		const order_query_parameters = '?auth=' + auth_token + '&orderBy="user_id"&equalTo="' + user_id + '"';
+		axios.get('/orders.json' + order_query_parameters)
 			.then(result => {
 				const fetched_orders = [];
 				for (let orderId in result.data) {
