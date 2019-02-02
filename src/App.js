@@ -37,6 +37,7 @@ class App extends Component {
     if (this.props.reducer_is_user_authenticated) {
       conditional_routes = (
         <Switch>
+          <Route path='/authentication' component={Authentication} />
           <Route path='/prev-orders' component={PrevOrders} />
           <Route path='/checkout' component={Checkout} />
           <Route path='/logout' component={Logout} />
